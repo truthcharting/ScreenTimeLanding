@@ -6,7 +6,7 @@
 
 1. Go to [GitHub.com](https://github.com) and sign in
 2. Click the "+" icon in the top right and select "New repository"
-3. Name it `pilgrim-path-landing` (or your preferred name)
+3. Name it `ScreenTimeLanding` (or your preferred name)
 4. Make it **Public** (required for free GitHub Pages)
 5. **Don't** initialize with README, .gitignore, or license (we already have these)
 6. Click "Create repository"
@@ -17,7 +17,7 @@ Run these commands in your terminal:
 
 ```bash
 # Add the GitHub repository as remote origin
-git remote add origin https://github.com/YOUR_USERNAME/pilgrim-path-landing.git
+git remote add origin https://github.com/truthcharting/ScreenTimeLanding.git
 
 # Push your code to GitHub
 git push -u origin main
@@ -34,7 +34,7 @@ git push -u origin main
 ### 4. Your Site is Live!
 
 Your site will be available at:
-`https://YOUR_USERNAME.github.io/pilgrim-path-landing/`
+`https://truthcharting.github.io/ScreenTimeLanding/`
 
 The first deployment may take a few minutes to complete.
 

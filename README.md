@@ -22,8 +22,8 @@ A beautiful, modern landing page for the Pilgrim Path app - a Catholic app that 
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/pilgrim-path-landing.git
-cd pilgrim-path-landing
+git clone https://github.com/truthcharting/ScreenTimeLanding.git
+cd ScreenTimeLanding
 ```
 
 2. Install dependencies:
@@ -46,7 +46,7 @@ See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed deployment instructions.
 1. Create a new public repository on GitHub
 2. Push this code to your repository
 3. Enable GitHub Pages in repository settings
-4. Your site will be live at `https://yourusername.github.io/pilgrim-path-landing/`
+4. Your site will be live at `https://truthcharting.github.io/ScreenTimeLanding/`
 
 ## 🏗️ Build
 

@@ -3,14 +3,14 @@ import { PhoneMockup } from "./components/PhoneMockup";
 import { PhoneCarousel } from "./components/PhoneCarousel";
 import { motion } from "framer-motion";
 import { ArrowRight, Download } from "lucide-react";
-// Placeholder images - replace with actual app screenshots
-const mapScreenshot = "https://via.placeholder.com/300x600/1f2937/ffffff?text=Map+View";
-const journalScreenshot = "https://via.placeholder.com/300x600/1f2937/ffffff?text=Journal";
-const profileScreenshot = "https://via.placeholder.com/300x600/1f2937/ffffff?text=Profile";
-const sacredPause1 = "https://via.placeholder.com/300x600/1f2937/ffffff?text=Sacred+Pause+1";
-const sacredPause2 = "https://via.placeholder.com/300x600/1f2937/ffffff?text=Sacred+Pause+2";
-const sacredPause3 = "https://via.placeholder.com/300x600/1f2937/ffffff?text=Sacred+Pause+3";
-const instagramBlocked = "https://via.placeholder.com/300x600/1f2937/ffffff?text=Instagram+Blocked";
+// Real app screenshots from Figma
+import mapScreenshot from "../images/IMG_9828.png";
+import journalScreenshot from "../images/IMG_9829.png";
+import profileScreenshot from "../images/IMG_9830.png";
+import sacredPause1 from "../images/IMG_9833.png";
+import sacredPause2 from "../images/IMG_9835.png";
+import sacredPause3 from "../images/IMG_9837.png";
+import instagramBlocked from "../images/IMG_9840.png";
 
 export default function App() {
   const carouselItems = [
