@@ -22,12 +22,18 @@ export function PhoneCarousel({ items }: PhoneCarouselProps) {
     return () => clearInterval(timer);
   }, [items.length]);
 
+  // Calculate the offset to center the current item
+  // Each item is 280px wide, and we want the current item to be centered
+  const itemWidth = 280;
+  const centerOffset = (window.innerWidth - itemWidth) / 2;
+  const translateX = centerOffset - (currentIndex * itemWidth);
+
   return (
     <div className="relative w-full h-[600px] flex items-center justify-center overflow-hidden">
       <motion.div 
         className="flex items-center justify-center"
         animate={{ 
-          x: -currentIndex * 280 + 140 // Center the current item (280/2 = 140)
+          x: translateX
         }}
         transition={{
           type: "tween",
