@@ -1,15 +1,16 @@
 import { Button } from "./components/ui/button";
 import { PhoneMockup } from "./components/PhoneMockup";
 import { PhoneCarousel } from "./components/PhoneCarousel";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { ArrowRight, Download } from "lucide-react";
-import mapScreenshot from "figma:asset/a27cee5ebde25bea3f151596aaa5f9c3930d5a7c.png";
-import journalScreenshot from "figma:asset/2686c0358fc68b0c70002c5076cba5a39609508e.png";
-import profileScreenshot from "figma:asset/89e000d5fcca51473eb20535673199f2d65b9ca2.png";
-import sacredPause1 from "figma:asset/3b4040bdf80905006c47b89fb75909155c2c58a5.png";
-import sacredPause2 from "figma:asset/7f7b5078653c88a02636ab340a6d6b552fedaf7f.png";
-import sacredPause3 from "figma:asset/86e128ea13661f13f4c9a19430eb39376f10f9e6.png";
-import instagramBlocked from "figma:asset/5a864ee06280f7477f79a8cba8e73b6719891f84.png";
+// Placeholder images - replace with actual app screenshots
+const mapScreenshot = "https://via.placeholder.com/300x600/1f2937/ffffff?text=Map+View";
+const journalScreenshot = "https://via.placeholder.com/300x600/1f2937/ffffff?text=Journal";
+const profileScreenshot = "https://via.placeholder.com/300x600/1f2937/ffffff?text=Profile";
+const sacredPause1 = "https://via.placeholder.com/300x600/1f2937/ffffff?text=Sacred+Pause+1";
+const sacredPause2 = "https://via.placeholder.com/300x600/1f2937/ffffff?text=Sacred+Pause+2";
+const sacredPause3 = "https://via.placeholder.com/300x600/1f2937/ffffff?text=Sacred+Pause+3";
+const instagramBlocked = "https://via.placeholder.com/300x600/1f2937/ffffff?text=Instagram+Blocked";
 
 export default function App() {
   const carouselItems = [

@@ -1,4 +1,4 @@
-import { motion, AnimatePresence } from "motion/react";
+import { motion } from "framer-motion";
 import { PhoneMockup } from "./PhoneMockup";
 import { useEffect, useState } from "react";
 
@@ -40,7 +40,7 @@ export function PhoneCarousel({ items }: PhoneCarouselProps) {
   return (
     <div className="relative w-full h-[600px] flex items-center justify-center overflow-hidden">
       <div className="relative flex items-center justify-center">
-        {visibleItems.map((item, arrayIndex) => {
+        {visibleItems.map((item) => {
           const position = item.position;
           const isCenter = position === 0;
           const scale = isCenter ? 1 : Math.max(0.6, 1 - Math.abs(position) * 0.2);
