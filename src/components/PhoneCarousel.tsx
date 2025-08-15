@@ -27,7 +27,7 @@ export function PhoneCarousel({ items }: PhoneCarouselProps) {
       <motion.div 
         className="flex items-center justify-center"
         animate={{ 
-          x: -currentIndex * 280 // Move the entire container left
+          x: -currentIndex * 280 + 140 // Center the current item (280/2 = 140)
         }}
         transition={{
           type: "tween",
