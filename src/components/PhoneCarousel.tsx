@@ -17,47 +17,44 @@ export function PhoneCarousel({ items }: PhoneCarouselProps) {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % items.length);
-    }, 4000);
+    }, 3000); // Slightly faster for smoother experience
 
     return () => clearInterval(timer);
   }, [items.length]);
 
-  const getVisibleItems = () => {
+  // Create a continuous array for smooth infinite scrolling
+  const createInfiniteArray = () => {
     const result = [];
-    for (let i = -2; i <= 2; i++) {
-      const index = (currentIndex + i + items.length) % items.length;
+    // Add items before current for smooth entry
+    for (let i = -3; i < items.length + 3; i++) {
+      const index = (i + items.length) % items.length;
       result.push({
         ...items[index],
-        position: i,
-        index: index
+        originalIndex: index,
+        displayIndex: i
       });
     }
     return result;
   };
 
-  const visibleItems = getVisibleItems();
+  const infiniteItems = createInfiniteArray();
 
   return (
     <div className="relative w-full h-[600px] flex items-center justify-center overflow-hidden">
       <div className="relative flex items-center justify-center">
-        {visibleItems.map((item) => {
-          const position = item.position;
+        {infiniteItems.map((item, arrayIndex) => {
+          const position = arrayIndex - 3 - currentIndex; // Center the current item
           const isCenter = position === 0;
           const scale = isCenter ? 1 : Math.max(0.6, 1 - Math.abs(position) * 0.2);
           const opacity = isCenter ? 1 : Math.max(0.3, 1 - Math.abs(position) * 0.3);
           const translateX = position * 280; // Spacing between phones
-          const zIndex = 5 - Math.abs(position);
+          const zIndex = 10 - Math.abs(position);
 
           return (
             <motion.div
-              key={`${item.index}-${currentIndex}`}
+              key={`${item.originalIndex}-${arrayIndex}`}
               className="absolute"
-              initial={{ 
-                x: translateX,
-                scale: scale,
-                opacity: opacity,
-                zIndex: zIndex
-              }}
+              initial={false}
               animate={{ 
                 x: translateX,
                 scale: scale,
@@ -65,10 +62,9 @@ export function PhoneCarousel({ items }: PhoneCarouselProps) {
                 zIndex: zIndex
               }}
               transition={{
-                type: "spring",
-                stiffness: 200,
-                damping: 25,
-                mass: 0.8
+                type: "tween",
+                ease: "easeInOut",
+                duration: 0.8
               }}
               style={{
                 pointerEvents: isCenter ? 'auto' : 'none'
