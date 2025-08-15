@@ -16,7 +16,9 @@ A beautiful, modern landing page for the Pilgrim Path app - a Catholic app that 
 - **Framer Motion** for animations
 - **Lucide React** for icons
 
-## 📦 Installation
+## 🚀 Quick Start
+
+### Local Development
 
 1. Clone the repository:
 ```bash
@@ -35,6 +37,16 @@ npm run dev
 ```
 
 4. Open [http://localhost:5173](http://localhost:5173) to view it in the browser.
+
+### Deploy to GitHub Pages
+
+See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed deployment instructions.
+
+**Quick deployment:**
+1. Create a new public repository on GitHub
+2. Push this code to your repository
+3. Enable GitHub Pages in repository settings
+4. Your site will be live at `https://yourusername.github.io/pilgrim-path-landing/`
 
 ## 🏗️ Build
 
