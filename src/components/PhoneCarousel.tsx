@@ -17,70 +17,64 @@ export function PhoneCarousel({ items }: PhoneCarouselProps) {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % items.length);
-    }, 3000); // Slightly faster for smoother experience
+    }, 3000);
 
     return () => clearInterval(timer);
   }, [items.length]);
 
-  // Create a continuous array for smooth infinite scrolling
-  const createInfiniteArray = () => {
-    const result = [];
-    // Add items before current for smooth entry
-    for (let i = -3; i < items.length + 3; i++) {
-      const index = (i + items.length) % items.length;
-      result.push({
-        ...items[index],
-        originalIndex: index,
-        displayIndex: i
-      });
-    }
-    return result;
-  };
-
-  const infiniteItems = createInfiniteArray();
-
   return (
     <div className="relative w-full h-[600px] flex items-center justify-center overflow-hidden">
-      <div className="relative flex items-center justify-center">
-        {infiniteItems.map((item, arrayIndex) => {
-          const position = arrayIndex - 3 - currentIndex; // Center the current item
-          const isCenter = position === 0;
-          const scale = isCenter ? 1 : Math.max(0.6, 1 - Math.abs(position) * 0.2);
-          const opacity = isCenter ? 1 : Math.max(0.3, 1 - Math.abs(position) * 0.3);
-          const translateX = position * 280; // Spacing between phones
-          const zIndex = 10 - Math.abs(position);
+      <motion.div 
+        className="flex items-center justify-center"
+        animate={{ 
+          x: -currentIndex * 280 // Move the entire container left
+        }}
+        transition={{
+          type: "tween",
+          ease: "easeInOut",
+          duration: 1.2
+        }}
+      >
+        {/* Render all items in a horizontal line */}
+        {items.map((item, index) => {
+          const isCenter = index === currentIndex;
+          const scale = isCenter ? 1 : 0.7;
+          const opacity = isCenter ? 1 : 0.4;
+          const zIndex = isCenter ? 10 : 5;
 
           return (
-            <motion.div
-              key={`${item.originalIndex}-${arrayIndex}`}
-              className="absolute"
-              initial={false}
-              animate={{ 
-                x: translateX,
-                scale: scale,
-                opacity: opacity,
-                zIndex: zIndex
-              }}
-              transition={{
-                type: "tween",
-                ease: "easeInOut",
-                duration: 0.8
-              }}
-              style={{
-                pointerEvents: isCenter ? 'auto' : 'none'
-              }}
+            <div
+              key={index}
+              className="mx-4 flex-shrink-0"
+              style={{ width: '280px' }}
             >
-              <PhoneMockup>
-                <img
-                  src={item.src}
-                  alt={item.alt}
-                  className="w-full h-full object-cover"
-                />
-              </PhoneMockup>
-            </motion.div>
+              <motion.div
+                animate={{ 
+                  scale: scale,
+                  opacity: opacity,
+                  zIndex: zIndex
+                }}
+                transition={{
+                  type: "tween",
+                  ease: "easeInOut",
+                  duration: 0.8
+                }}
+                style={{
+                  pointerEvents: isCenter ? 'auto' : 'none'
+                }}
+              >
+                <PhoneMockup>
+                  <img
+                    src={item.src}
+                    alt={item.alt}
+                    className="w-full h-full object-cover"
+                  />
+                </PhoneMockup>
+              </motion.div>
+            </div>
           );
         })}
-      </div>
+      </motion.div>
 
       {/* Dots indicator */}
       <div className="absolute bottom-0 flex justify-center gap-2">
