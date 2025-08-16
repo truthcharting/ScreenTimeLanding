@@ -213,7 +213,7 @@ export default function App() {
             <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center">
               <span className="text-black font-bold text-sm">S</span>
             </div>
-            <span className="text-2xl font-medium text-white">SaveTime</span>
+            <span className="text-2xl font-medium text-white">Sacred</span>
           </div>
           
           <div className="flex items-center gap-12 text-sm text-gray-400">
