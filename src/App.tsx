@@ -11,6 +11,7 @@ import sacredPause1 from "../images/IMG_9833.png";
 import sacredPause2 from "../images/IMG_9835.png";
 import sacredPause3 from "../images/IMG_9837.png";
 import instagramBlocked from "../images/IMG_9840.png";
+import sacredLogo from "./Sacred Logo.jpg";
 
 export default function App() {
   const carouselItems = [
@@ -29,8 +30,12 @@ export default function App() {
         <div className="bg-black/80 backdrop-blur-md rounded-full px-2 py-2 border border-gray-700">
           <div className="flex items-center gap-1">
             <div className="flex items-center gap-1 px-4 py-2">
-              <div className="w-6 h-6 bg-white rounded-md flex items-center justify-center">
-                <span className="text-black font-bold text-xs">S</span>
+              <div className="w-6 h-6 bg-white rounded-md flex items-center justify-center overflow-hidden">
+                <img 
+                  src={sacredLogo} 
+                  alt="Sacred Logo" 
+                  className="w-full h-full object-cover"
+                />
               </div>
             </div>
             <a href="#" className="px-4 py-2 text-sm text-gray-300 hover:text-white transition-colors">Home</a>
@@ -210,8 +215,12 @@ export default function App() {
       <footer className="py-16 px-6 border-t border-gray-800 bg-black">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center">
-              <span className="text-black font-bold text-sm">S</span>
+            <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center overflow-hidden">
+              <img 
+                src={sacredLogo} 
+                alt="Sacred Logo" 
+                className="w-full h-full object-cover"
+              />
             </div>
             <span className="text-2xl font-medium text-white">Sacred</span>
           </div>
