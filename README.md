@@ -1,6 +1,6 @@
-# Pilgrim Path Landing Page
+# SaveTime Landing Page
 
-A beautiful, modern landing page for the Pilgrim Path app - a Catholic app that transforms your bad habits into good habits.
+A beautiful, modern landing page for the SaveTime app - a Catholic app that transforms your bad habits into good habits.
 
 ## 🚀 Features
 
@@ -58,9 +58,9 @@ npm run build
 
 The built files will be in the `dist` directory.
 
-## 📱 About Pilgrim Path
+## 📱 About SaveTime
 
-Pilgrim Path is a Catholic app designed to help users transform their digital habits into spiritual practices. The app features:
+SaveTime is a Catholic app designed to help users transform their digital habits into spiritual practices. The app features:
 
 - **Screen Time Management**: Sacred pauses that interrupt social media usage
 - **Sacred Space Discovery**: Interactive map to find nearby churches and chapels
@@ -81,7 +81,7 @@ This project is private and proprietary.
 
 ## 🤝 Contributing
 
-This is a private project for the Pilgrim Path app landing page.
+This is a private project for the SaveTime app landing page.
 
 ---
 

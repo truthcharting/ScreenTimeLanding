@@ -30,7 +30,7 @@ export default function App() {
           <div className="flex items-center gap-1">
             <div className="flex items-center gap-1 px-4 py-2">
               <div className="w-6 h-6 bg-white rounded-md flex items-center justify-center">
-                <span className="text-black font-bold text-xs">P</span>
+                <span className="text-black font-bold text-xs">S</span>
               </div>
             </div>
             <a href="#" className="px-4 py-2 text-sm text-gray-300 hover:text-white transition-colors">Home</a>
@@ -211,9 +211,9 @@ export default function App() {
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center">
-              <span className="text-black font-bold text-sm">P</span>
+              <span className="text-black font-bold text-sm">S</span>
             </div>
-            <span className="text-2xl font-medium text-white">Pilgrim Path</span>
+            <span className="text-2xl font-medium text-white">SaveTime</span>
           </div>
           
           <div className="flex items-center gap-12 text-sm text-gray-400">
