@@ -1,6 +1,7 @@
 import { Button } from "./components/ui/button";
 import { PhoneCarousel } from "./components/PhoneCarousel";
 import ThreeJSPhone from "./components/ThreeJSPhone";
+import { SacredLogo } from "./components/SacredLogo";
 import { motion } from "framer-motion";
 import { ArrowRight, Download } from "lucide-react";
 // Real app screenshots from Figma
@@ -66,6 +67,7 @@ export default function App() {
                 className="space-y-8"
               >
                 <div className="space-y-8">
+                  <SacredLogo />
                   <h1 className="text-5xl lg:text-7xl font-light text-white leading-[0.9] font-serif">
                     Turn scrolling into
                     <span className="italic font-light text-gray-300"> prayer</span>
@@ -137,7 +139,18 @@ export default function App() {
             className="space-y-12"
           >
             <div className="space-y-8">
-              <div className="flex justify-center mb-8">
+              <div className="flex justify-center items-center mb-8 space-x-8">
+                <div className="flex items-center">
+                  <div className="w-6 h-6 bg-white rounded-md flex items-center justify-center overflow-hidden mr-3">
+                    <img 
+                      src={sacredLogo} 
+                      alt="Sacred Logo" 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <span className="text-2xl font-semibold text-white">Sacred</span>
+                </div>
+                <div className="text-3xl font-bold text-white opacity-60">×</div>
                 <img 
                   src={hallowLogo} 
                   alt="Hallow Logo" 
