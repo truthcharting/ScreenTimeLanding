@@ -140,17 +140,8 @@ export default function App() {
           >
             <div className="space-y-8">
               <div className="flex justify-center items-center mb-8 space-x-8">
-                <div className="flex items-center">
-                  <div className="w-6 h-6 bg-white rounded-md flex items-center justify-center overflow-hidden mr-3">
-                    <img 
-                      src={sacredLogo} 
-                      alt="Sacred Logo" 
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <span className="text-2xl font-semibold text-white">Sacred</span>
-                </div>
-                <div className="text-3xl font-bold text-white opacity-60">×</div>
+                <span className="text-6xl font-bold text-white tracking-tight">Sacred</span>
+                <div className="text-4xl font-bold text-white opacity-60">×</div>
                 <img 
                   src={hallowLogo} 
                   alt="Hallow Logo" 
@@ -158,7 +149,7 @@ export default function App() {
                 />
               </div>
               <h2 className="text-3xl lg:text-4xl font-thin text-white font-sans tracking-wide">
-                The perfect partner.
+                The perfect partners.
               </h2>
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
                 <motion.div
