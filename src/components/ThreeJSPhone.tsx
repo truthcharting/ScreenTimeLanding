@@ -154,12 +154,12 @@ const ThreeJSPhone: React.FC<ThreeJSPhoneProps> = ({ className = "" }) => {
       
       // Rotate iPhone to face mouse cursor and respond to scroll
       if (modelRef.current) {
-        const targetRotationY = mouseX * 0.3; // Limit rotation range
-        const targetRotationX = mouseY * 0.1; // Subtle vertical rotation
+        const targetRotationY = mouseX * 0.8; // Increased rotation range for more substantial movement
+        const targetRotationX = mouseY * 0.3; // Increased vertical rotation
         const scrollRotationY = scrollY * 1.2; // Increased scroll sensitivity
         
-        modelRef.current.rotation.y += (targetRotationY + scrollRotationY - modelRef.current.rotation.y) * 0.05;
-        modelRef.current.rotation.x += (targetRotationX - modelRef.current.rotation.x) * 0.05;
+        modelRef.current.rotation.y += (targetRotationY + scrollRotationY - modelRef.current.rotation.y) * 0.08; // Faster response
+        modelRef.current.rotation.x += (targetRotationX - modelRef.current.rotation.x) * 0.08; // Faster response
       }
       
       controls.update();
