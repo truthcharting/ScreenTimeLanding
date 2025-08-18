@@ -139,16 +139,26 @@ const ThreeJSPhone: React.FC<ThreeJSPhoneProps> = ({ className = "" }) => {
 
     window.addEventListener('mousemove', handleMouseMove);
 
+    // Scroll tracking for iPhone rotation
+    let scrollY = 0;
+    
+    const handleScroll = () => {
+      scrollY = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
     // Animation loop
     const animate = () => {
       requestAnimationFrame(animate);
       
-      // Rotate iPhone to face mouse cursor
+      // Rotate iPhone to face mouse cursor and respond to scroll
       if (modelRef.current) {
         const targetRotationY = mouseX * 0.3; // Limit rotation range
         const targetRotationX = mouseY * 0.1; // Subtle vertical rotation
+        const scrollRotationY = scrollY * 0.5; // Scroll-based rotation
         
-        modelRef.current.rotation.y += (targetRotationY - modelRef.current.rotation.y) * 0.05;
+        modelRef.current.rotation.y += (targetRotationY + scrollRotationY - modelRef.current.rotation.y) * 0.05;
         modelRef.current.rotation.x += (targetRotationX - modelRef.current.rotation.x) * 0.05;
       }
       
@@ -175,6 +185,7 @@ const ThreeJSPhone: React.FC<ThreeJSPhoneProps> = ({ className = "" }) => {
     return () => {
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('scroll', handleScroll);
       if (mountRef.current && renderer.domElement) {
         mountRef.current.removeChild(renderer.domElement);
       }
