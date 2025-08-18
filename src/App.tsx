@@ -139,10 +139,10 @@ export default function App() {
                 <img 
                   src={hallowLogo} 
                   alt="Hallow Logo" 
-                  className="h-16 opacity-90"
+                  className="h-20 opacity-90"
                 />
               </div>
-              <h2 className="text-4xl lg:text-5xl font-light text-white font-serif">
+              <h2 className="text-3xl lg:text-4xl font-light text-white font-serif">
                 The perfect partner.
               </h2>
               <div className="text-xl text-gray-200 leading-relaxed max-w-4xl mx-auto space-y-6">
