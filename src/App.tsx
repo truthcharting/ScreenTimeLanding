@@ -143,12 +143,13 @@ export default function App() {
                 />
               </div>
               <h2 className="text-4xl lg:text-5xl font-light text-white font-serif">
-                This app is not a Catholic content app
+                Focused on transformation, not content creation
               </h2>
               <p className="text-xl text-gray-200 leading-relaxed max-w-4xl mx-auto">
-                It exists to replace doomscrolling with prayer. For prayer content, the app aims to drive users to Hallow, 
-                decreasing the user's screentime on addictive apps like Instagram and Facebook, and increasing the amount of 
-                time spent in prayer, including suggested prayer sessions on the Hallow app.
+                Sacred is designed to redirect screen time from social media platforms toward spiritual practices. 
+                Rather than creating prayer content, we partner with Hallow to provide users with curated prayer experiences. 
+                Our mission is to reduce time spent on addictive platforms while increasing meaningful moments of prayer 
+                through integrated Hallow sessions and guided spiritual practices.
               </p>
             </div>
           </motion.div>
