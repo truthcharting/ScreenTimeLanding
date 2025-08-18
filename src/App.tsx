@@ -145,20 +145,29 @@ export default function App() {
               <h2 className="text-4xl lg:text-5xl font-light text-white font-serif">
                 The perfect partner.
               </h2>
-              <p className="text-xl text-gray-200 leading-relaxed max-w-4xl mx-auto">
-                Sacred is designed to redirect screen time from social media platforms toward spiritual practices. 
-                Rather than creating prayer content, we partner with Hallow to provide users with curated prayer experiences. 
-                Our mission is to reduce time spent on addictive platforms while increasing meaningful moments of prayer.
-
-                When users attempt to access limited apps, Sacred intelligently intervenes with Hallow prayer suggestions 
-                before allowing them to set time boundaries.
-
-                Sacred operates as a completely free application with no advertisements. Our sustainable revenue model 
-                is based on strategic lead generation partnerships with Hallow.
-
-                Through this innovative approach, Sacred effectively transforms doomscrolling habits into meaningful 
-                Hallow prayer sessions.
-              </p>
+              <div className="text-xl text-gray-200 leading-relaxed max-w-4xl mx-auto space-y-6">
+                <p>
+                  Sacred is designed to redirect screen time from social media platforms toward spiritual practices.
+                </p>
+                <p>
+                  Rather than creating prayer content, we partner with Hallow to provide users with curated prayer experiences.
+                </p>
+                <p>
+                  Our mission is to reduce time spent on addictive platforms while increasing meaningful moments of prayer.
+                </p>
+                <p>
+                  When users attempt to access an app they have limited, Sacred intervenes with Hallow prayer suggestions
+                  before allowing them to select the amount of time they'll be using the limited app.
+                </p>
+                <p>
+                  Sacred operates as a completely free application with no advertisements. Our sustainable revenue model
+                  is based on strategic lead generation partnerships with Hallow.
+                </p>
+                <p>
+                  Through this innovative approach, Sacred effectively transforms doomscrolling habits into meaningful
+                  Hallow prayer sessions.
+                </p>
+              </div>
             </div>
           </motion.div>
         </div>
