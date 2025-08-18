@@ -134,7 +134,7 @@ const ThreeJSPhone: React.FC<ThreeJSPhoneProps> = ({ className = "" }) => {
     const handleMouseMove = (event: MouseEvent) => {
       // Use window coordinates instead of component coordinates
       mouseX = (event.clientX / window.innerWidth) * 2 - 1;
-      mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+      mouseY = (event.clientY / window.innerHeight) * 2 - 1; // Fixed: removed negative sign
     };
 
     window.addEventListener('mousemove', handleMouseMove);
@@ -156,7 +156,7 @@ const ThreeJSPhone: React.FC<ThreeJSPhoneProps> = ({ className = "" }) => {
       if (modelRef.current) {
         const targetRotationY = mouseX * 0.3; // Limit rotation range
         const targetRotationX = mouseY * 0.1; // Subtle vertical rotation
-        const scrollRotationY = scrollY * 0.5; // Scroll-based rotation
+        const scrollRotationY = scrollY * 1.2; // Increased scroll sensitivity
         
         modelRef.current.rotation.y += (targetRotationY + scrollRotationY - modelRef.current.rotation.y) * 0.05;
         modelRef.current.rotation.x += (targetRotationX - modelRef.current.rotation.x) * 0.05;
