@@ -80,16 +80,13 @@ const ThreeJSPhone: React.FC<ThreeJSPhoneProps> = ({ className = "" }) => {
     const env = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
     scene.environment = env;
 
-    // Controls setup
+    // Disable controls - we'll handle rotation manually
     const controls = new OrbitControls(camera, renderer.domElement);
-    controls.enableDamping = true;
-    controls.dampingFactor = 0.05;
-    controls.enableZoom = true;
+    controls.enableDamping = false;
+    controls.enableZoom = false;
     controls.enablePan = false;
-    controls.autoRotate = true;
-    controls.autoRotateSpeed = 0.5;
-    controls.maxPolarAngle = Math.PI / 2;
-    controls.minPolarAngle = Math.PI / 2;
+    controls.enableRotate = false;
+    controls.autoRotate = false;
     controlsRef.current = controls;
 
     // Load 3D model
@@ -119,7 +116,7 @@ const ThreeJSPhone: React.FC<ThreeJSPhoneProps> = ({ className = "" }) => {
         const fov = camera.fov * (Math.PI / 180);
         let cameraZ = Math.abs(maxDim / 2 / Math.tan(fov / 2));
         cameraZ *= 1.4; // tight but comfortable frame
-        camera.position.set(0.2, 0.1, cameraZ);
+        camera.position.set(0, 0, cameraZ);
         camera.updateProjectionMatrix();
       },
       (progress) => {
@@ -130,9 +127,33 @@ const ThreeJSPhone: React.FC<ThreeJSPhoneProps> = ({ className = "" }) => {
       }
     );
 
+    // Mouse tracking for iPhone rotation
+    let mouseX = 0;
+    let mouseY = 0;
+    
+    const handleMouseMove = (event: MouseEvent) => {
+      if (!mountRef.current) return;
+      
+      const rect = mountRef.current.getBoundingClientRect();
+      mouseX = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+      mouseY = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+    };
+
+    mountRef.current.addEventListener('mousemove', handleMouseMove);
+
     // Animation loop
     const animate = () => {
       requestAnimationFrame(animate);
+      
+      // Rotate iPhone to face mouse cursor
+      if (modelRef.current) {
+        const targetRotationY = mouseX * 0.3; // Limit rotation range
+        const targetRotationX = mouseY * 0.1; // Subtle vertical rotation
+        
+        modelRef.current.rotation.y += (targetRotationY - modelRef.current.rotation.y) * 0.05;
+        modelRef.current.rotation.x += (targetRotationX - modelRef.current.rotation.x) * 0.05;
+      }
+      
       controls.update();
       renderer.render(scene, camera);
     };
@@ -155,8 +176,11 @@ const ThreeJSPhone: React.FC<ThreeJSPhoneProps> = ({ className = "" }) => {
     // Cleanup
     return () => {
       window.removeEventListener('resize', handleResize);
-      if (mountRef.current && renderer.domElement) {
-        mountRef.current.removeChild(renderer.domElement);
+      if (mountRef.current) {
+        mountRef.current.removeEventListener('mousemove', handleMouseMove);
+        if (renderer.domElement) {
+          mountRef.current.removeChild(renderer.domElement);
+        }
       }
       renderer.dispose();
     };

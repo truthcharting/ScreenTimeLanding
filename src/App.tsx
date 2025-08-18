@@ -25,7 +25,7 @@ export default function App() {
   return (
     <div className="min-h-screen bg-gray-900 text-white">
       {/* Navigation */}
-      <nav className="fixed top-6 left-1/2 transform -translate-x-1/2 z-50">
+      <nav className="fixed top-6 left-6 z-50">
         <div className="bg-black/80 backdrop-blur-md rounded-full px-2 py-2 border border-gray-700">
           <div className="flex items-center gap-1">
             <div className="flex items-center gap-1 px-4 py-2">
@@ -51,51 +51,58 @@ export default function App() {
       </nav>
 
       {/* Hero Section */}
-      <section className="pt-40 pb-20 px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-20">
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="space-y-8"
-            >
-              <div className="space-y-8">
-                <h1 className="text-6xl lg:text-8xl font-light text-white leading-[0.9] font-serif">
-                  Turn scrolling into
-                  <span className="italic font-light text-gray-300"> prayer</span>
-                </h1>
-                <p className="text-lg text-gray-400 leading-relaxed max-w-4xl mx-auto">
-                  A Catholic app that transforms your bad habits into good habits. 
-                  Increase silence, discover sacred spaces, track prayer habits, and grow in faith.
-                </p>
-              </div>
-              
-              <div className="flex gap-4 justify-center pt-8">
-                <Button size="lg" className="bg-white text-black hover:bg-gray-200 rounded-full px-8 py-4 text-base">
-                  Download App
-                  <ArrowRight className="w-5 h-5 ml-2" />
-                </Button>
-                <Button size="lg" variant="outline" className="rounded-full px-8 py-4 border-gray-600 text-gray-300 hover:bg-gray-800 text-base">
-                  Learn More
-                </Button>
-              </div>
-            </motion.div>
-          </div>
+      <section className="min-h-screen flex items-center px-6">
+        <div className="max-w-7xl mx-auto w-full">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Left side - Content */}
+            <div className="text-left">
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+                className="space-y-8"
+              >
+                <div className="space-y-8">
+                  <h1 className="text-5xl lg:text-7xl font-light text-white leading-[0.9] font-serif">
+                    Turn scrolling into
+                    <span className="italic font-light text-gray-300"> prayer</span>
+                  </h1>
+                  <p className="text-lg text-gray-400 leading-relaxed max-w-xl">
+                    A Catholic app that transforms your bad habits into good habits. 
+                    Increase silence, discover sacred spaces, track prayer habits, and grow in faith.
+                  </p>
+                </div>
+                
+                <div className="flex gap-4 pt-8">
+                  <Button size="lg" className="bg-white text-black hover:bg-gray-200 rounded-full px-8 py-4 text-base">
+                    Download App
+                    <ArrowRight className="w-5 h-5 ml-2" />
+                  </Button>
+                  <Button size="lg" variant="outline" className="rounded-full px-8 py-4 border-gray-600 text-gray-300 hover:bg-gray-800 text-base">
+                    Learn More
+                  </Button>
+                </div>
+              </motion.div>
+            </div>
 
-          {/* 3D iPhone Model */}
-          <div className="flex justify-center mb-24">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              className="w-full h-[70vh] max-w-6xl"
-            >
-              <ThreeJSPhone />
-            </motion.div>
+            {/* Right side - 3D iPhone Model */}
+            <div className="flex justify-center items-center">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.3 }}
+                className="w-full h-[80vh]"
+              >
+                <ThreeJSPhone />
+              </motion.div>
+            </div>
           </div>
+        </div>
+      </section>
 
-          {/* Carousel Section */}
+      {/* Carousel Section */}
+      <section className="py-32 px-6">
+        <div className="max-w-6xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
