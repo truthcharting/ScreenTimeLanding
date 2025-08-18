@@ -140,7 +140,7 @@ export default function App() {
           >
             <div className="space-y-8">
               <div className="flex justify-center items-center mb-8 space-x-8">
-                <span className="text-7xl font-bold text-white tracking-tight">Sacred</span>
+                <span className="text-8xl font-bold text-white tracking-tight">Sacred</span>
                 <div className="text-4xl font-bold text-white opacity-60">×</div>
                 <img 
                   src={hallowLogo} 
