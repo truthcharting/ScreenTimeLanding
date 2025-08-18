@@ -115,7 +115,7 @@ const ThreeJSPhone: React.FC<ThreeJSPhoneProps> = ({ className = "" }) => {
         const maxDim = Math.max(size.x, size.y, size.z);
         const fov = camera.fov * (Math.PI / 180);
         let cameraZ = Math.abs(maxDim / 2 / Math.tan(fov / 2));
-        cameraZ *= 1.4; // tight but comfortable frame
+        cameraZ *= 1.1; // closer for larger appearance
         camera.position.set(0, 0, cameraZ);
         camera.updateProjectionMatrix();
       },
@@ -127,19 +127,17 @@ const ThreeJSPhone: React.FC<ThreeJSPhoneProps> = ({ className = "" }) => {
       }
     );
 
-    // Mouse tracking for iPhone rotation
+    // Mouse tracking for iPhone rotation - track across entire window
     let mouseX = 0;
     let mouseY = 0;
     
     const handleMouseMove = (event: MouseEvent) => {
-      if (!mountRef.current) return;
-      
-      const rect = mountRef.current.getBoundingClientRect();
-      mouseX = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-      mouseY = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+      // Use window coordinates instead of component coordinates
+      mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+      mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
     };
 
-    mountRef.current.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mousemove', handleMouseMove);
 
     // Animation loop
     const animate = () => {
@@ -176,11 +174,9 @@ const ThreeJSPhone: React.FC<ThreeJSPhoneProps> = ({ className = "" }) => {
     // Cleanup
     return () => {
       window.removeEventListener('resize', handleResize);
-      if (mountRef.current) {
-        mountRef.current.removeEventListener('mousemove', handleMouseMove);
-        if (renderer.domElement) {
-          mountRef.current.removeChild(renderer.domElement);
-        }
+      window.removeEventListener('mousemove', handleMouseMove);
+      if (mountRef.current && renderer.domElement) {
+        mountRef.current.removeChild(renderer.domElement);
       }
       renderer.dispose();
     };
