@@ -91,7 +91,7 @@ export default function App() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.3 }}
-                className="w-full h-[90vh]"
+                className="w-full h-screen"
               >
                 <ThreeJSPhone />
               </motion.div>

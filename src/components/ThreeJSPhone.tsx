@@ -96,7 +96,7 @@ const ThreeJSPhone: React.FC<ThreeJSPhoneProps> = ({ className = "" }) => {
       (gltf) => {
         const model = gltf.scene;
         model.scale.set(1, 1, 1);
-        model.position.set(0, -0.1, 0);
+        model.position.set(0, 0, 0);
         
         // Enable shadows for all meshes
         model.traverse((child) => {
@@ -115,8 +115,8 @@ const ThreeJSPhone: React.FC<ThreeJSPhoneProps> = ({ className = "" }) => {
         const maxDim = Math.max(size.x, size.y, size.z);
         const fov = camera.fov * (Math.PI / 180);
         let cameraZ = Math.abs(maxDim / 2 / Math.tan(fov / 2));
-        cameraZ *= 1.1; // closer for larger appearance
-        camera.position.set(0, 0, cameraZ);
+        cameraZ *= 1.2; // slightly further to ensure full visibility
+        camera.position.set(0, -0.2, cameraZ); // move camera down slightly
         camera.updateProjectionMatrix();
       },
       (progress) => {
