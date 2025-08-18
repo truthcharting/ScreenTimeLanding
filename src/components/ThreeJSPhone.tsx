@@ -3,7 +3,7 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
-import iphoneModel from '../iphone_16_With_Screen.glb';
+import iphoneModel from '../iphone_16_With_Screen_2.glb';
 
 interface ThreeJSPhoneProps {
   className?: string;
