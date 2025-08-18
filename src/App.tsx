@@ -11,7 +11,7 @@ import sacredPause1 from "../images/IMG_9833.png";
 import sacredPause2 from "../images/IMG_9835.png";
 import sacredPause3 from "../images/IMG_9837.png";
 import sacredLogo from "./Sacred Logo.jpg";
-import hallowLogo from "./Hallow Logo White.png";
+import hallowLogo from "./hallow-logo.svg";
 
 export default function App() {
   const carouselItems = [
