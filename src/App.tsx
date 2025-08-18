@@ -26,10 +26,10 @@ export default function App() {
   return (
     <div className="min-h-screen bg-gray-900 text-white">
       {/* Navigation */}
-      <nav className="fixed top-6 left-6 z-50">
-        <div className="bg-black/80 backdrop-blur-md rounded-full px-2 py-2 border border-gray-700">
-          <div className="flex items-center gap-1">
-            <div className="flex items-center gap-1 px-4 py-2">
+      <nav className="fixed top-6 left-1/2 transform -translate-x-1/2 z-50">
+        <div className="bg-black/80 backdrop-blur-md rounded-full px-6 py-3 border border-gray-700">
+          <div className="flex items-center space-x-8">
+            <div className="flex items-center space-x-3">
               <div className="w-6 h-6 bg-white rounded-md flex items-center justify-center overflow-hidden">
                 <img 
                   src={sacredLogo} 
@@ -37,14 +37,16 @@ export default function App() {
                   className="w-full h-full object-cover"
                 />
               </div>
+              <span className="text-white font-semibold">Sacred</span>
             </div>
-            <a href="#" className="px-4 py-2 text-sm text-gray-300 hover:text-white transition-colors">Home</a>
-            <a href="#" className="px-4 py-2 text-sm text-gray-300 hover:text-white transition-colors">Features</a>
-            <a href="#" className="px-4 py-2 text-sm text-gray-300 hover:text-white transition-colors">About</a>
-            <a href="#" className="px-4 py-2 text-sm text-gray-300 hover:text-white transition-colors">Pricing</a>
-            <a href="#" className="px-4 py-2 text-sm text-gray-300 hover:text-white transition-colors">Store</a>
-            <a href="#" className="px-4 py-2 text-sm text-gray-300 hover:text-white transition-colors">Contact</a>
-            <Button className="bg-white text-black hover:bg-gray-200 rounded-full px-4 py-2 text-sm ml-2">
+            <div className="flex items-center space-x-6">
+              <a href="#" className="text-gray-300 hover:text-white transition-colors">Features</a>
+              <a href="#" className="text-gray-300 hover:text-white transition-colors">About</a>
+              <a href="#" className="text-gray-300 hover:text-white transition-colors">Pricing</a>
+              <a href="#" className="text-gray-300 hover:text-white transition-colors">Store</a>
+              <a href="#" className="text-gray-300 hover:text-white transition-colors">Contact</a>
+            </div>
+            <Button className="bg-white text-black hover:bg-gray-200 rounded-full px-4 py-2">
               Download
             </Button>
           </div>
@@ -145,28 +147,117 @@ export default function App() {
               <h2 className="text-3xl lg:text-4xl font-thin text-white font-sans tracking-wide">
                 The perfect partner.
               </h2>
-              <div className="text-xl text-gray-200 leading-relaxed max-w-4xl mx-auto space-y-6">
-                <p>
-                  Sacred is designed to redirect screen time from social media platforms toward spiritual practices.
-                </p>
-                <p>
-                  Rather than creating prayer content, we partner with Hallow to provide users with curated prayer experiences.
-                </p>
-                <p>
-                  Our mission is to reduce time spent on addictive platforms while increasing meaningful moments of prayer.
-                </p>
-                <p>
-                  When users attempt to access an app they have limited, Sacred intervenes with Hallow prayer suggestions
-                  before allowing them to select the amount of time they'll be using the limited app.
-                </p>
-                <p>
-                  Sacred operates as a completely free application with no advertisements. Our sustainable revenue model
-                  is based on strategic lead generation partnerships with Hallow.
-                </p>
-                <p>
-                  Through this innovative approach, Sacred effectively transforms doomscrolling habits into meaningful
-                  Hallow prayer sessions.
-                </p>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: 0.1 }}
+                  className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-xl hover:shadow-2xl transition-all duration-300 hover:bg-white/15"
+                >
+                  <div className="flex items-center mb-4">
+                    <div className="w-8 h-8 bg-yellow-500 rounded-lg flex items-center justify-center mr-3">
+                      <span className="text-white font-bold text-sm">★</span>
+                    </div>
+                    <h3 className="text-lg font-semibold text-white">Screen Time Redirection</h3>
+                  </div>
+                  <p className="text-gray-200 leading-relaxed">
+                    Sacred is designed to redirect screen time from social media platforms toward spiritual practices.
+                  </p>
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: 0.2 }}
+                  className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-xl hover:shadow-2xl transition-all duration-300 hover:bg-white/15"
+                >
+                  <div className="flex items-center mb-4">
+                    <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center mr-3">
+                      <span className="text-white font-bold text-sm">★</span>
+                    </div>
+                    <h3 className="text-lg font-semibold text-white">Hallow Partnership</h3>
+                  </div>
+                  <p className="text-gray-200 leading-relaxed">
+                    Rather than creating prayer content, we partner with Hallow to provide users with curated prayer experiences.
+                  </p>
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: 0.3 }}
+                  className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-xl hover:shadow-2xl transition-all duration-300 hover:bg-white/15"
+                >
+                  <div className="flex items-center mb-4">
+                    <div className="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center mr-3">
+                      <span className="text-white font-bold text-sm">★</span>
+                    </div>
+                    <h3 className="text-lg font-semibold text-white">Mission Focus</h3>
+                  </div>
+                  <p className="text-gray-200 leading-relaxed">
+                    Our mission is to reduce time spent on addictive platforms while increasing meaningful moments of prayer.
+                  </p>
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: 0.4 }}
+                  className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-xl hover:shadow-2xl transition-all duration-300 hover:bg-white/15"
+                >
+                  <div className="flex items-center mb-4">
+                    <div className="w-8 h-8 bg-purple-500 rounded-lg flex items-center justify-center mr-3">
+                      <span className="text-white font-bold text-sm">★</span>
+                    </div>
+                    <h3 className="text-lg font-semibold text-white">Smart Intervention</h3>
+                  </div>
+                  <p className="text-gray-200 leading-relaxed">
+                    When users attempt to access an app they have limited, Sacred intervenes with Hallow prayer suggestions
+                    before allowing them to select the amount of time they'll be using the limited app.
+                  </p>
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: 0.5 }}
+                  className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-xl hover:shadow-2xl transition-all duration-300 hover:bg-white/15"
+                >
+                  <div className="flex items-center mb-4">
+                    <div className="w-8 h-8 bg-red-500 rounded-lg flex items-center justify-center mr-3">
+                      <span className="text-white font-bold text-sm">★</span>
+                    </div>
+                    <h3 className="text-lg font-semibold text-white">Free & Sustainable</h3>
+                  </div>
+                  <p className="text-gray-200 leading-relaxed">
+                    Sacred operates as a completely free application with no advertisements. Our sustainable revenue model
+                    is based on strategic lead generation partnerships with Hallow.
+                  </p>
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: 0.6 }}
+                  className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-xl hover:shadow-2xl transition-all duration-300 hover:bg-white/15"
+                >
+                  <div className="flex items-center mb-4">
+                    <div className="w-8 h-8 bg-indigo-500 rounded-lg flex items-center justify-center mr-3">
+                      <span className="text-white font-bold text-sm">★</span>
+                    </div>
+                    <h3 className="text-lg font-semibold text-white">Transform Habits</h3>
+                  </div>
+                  <p className="text-gray-200 leading-relaxed">
+                    Through this innovative approach, Sacred effectively transforms doomscrolling habits into meaningful
+                    Hallow prayer sessions.
+                  </p>
+                </motion.div>
               </div>
             </div>
           </motion.div>
