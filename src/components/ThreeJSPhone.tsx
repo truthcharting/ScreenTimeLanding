@@ -2,6 +2,7 @@ import React, { useRef, useEffect } from 'react';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
 import iphoneModel from '../iphone_16_With_Screen.glb';
 
 interface ThreeJSPhoneProps {
@@ -20,7 +21,8 @@ const ThreeJSPhone: React.FC<ThreeJSPhoneProps> = ({ className = "" }) => {
 
     // Scene setup
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x000000);
+    // Transparent canvas; let the page background show through
+    scene.background = null;
     sceneRef.current = scene;
 
     // Camera setup
@@ -44,24 +46,39 @@ const ThreeJSPhone: React.FC<ThreeJSPhoneProps> = ({ className = "" }) => {
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.2;
+    renderer.setClearColor(0x000000, 0);
     rendererRef.current = renderer;
 
     mountRef.current.appendChild(renderer.domElement);
 
-    // Lighting setup
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+    // Lighting setup – balanced key/fill/rim plus subtle environment
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.25);
     scene.add(ambientLight);
 
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-    directionalLight.position.set(5, 5, 5);
-    directionalLight.castShadow = true;
-    directionalLight.shadow.mapSize.width = 2048;
-    directionalLight.shadow.mapSize.height = 2048;
-    scene.add(directionalLight);
+    const keyLight = new THREE.DirectionalLight(0xffffff, 1.15);
+    keyLight.position.set(4, 6, 8);
+    keyLight.castShadow = true;
+    keyLight.shadow.mapSize.width = 2048;
+    keyLight.shadow.mapSize.height = 2048;
+    scene.add(keyLight);
 
-    const pointLight = new THREE.PointLight(0xffffff, 0.8);
-    pointLight.position.set(-5, 5, 5);
-    scene.add(pointLight);
+    const fillLight = new THREE.DirectionalLight(0xffffff, 0.6);
+    fillLight.position.set(-6, 2, 4);
+    scene.add(fillLight);
+
+    const rimLight = new THREE.DirectionalLight(0xffffff, 0.8);
+    rimLight.position.set(0, 5, -6);
+    scene.add(rimLight);
+
+    const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444, 0.35);
+    hemiLight.position.set(0, 6, 0);
+    scene.add(hemiLight);
+
+    // Image-based lighting for PBR materials
+    const pmrem = new THREE.PMREMGenerator(renderer);
+    pmrem.compileEquirectangularShader();
+    const env = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+    scene.environment = env;
 
     // Controls setup
     const controls = new OrbitControls(camera, renderer.domElement);
@@ -82,7 +99,7 @@ const ThreeJSPhone: React.FC<ThreeJSPhoneProps> = ({ className = "" }) => {
       (gltf) => {
         const model = gltf.scene;
         model.scale.set(1, 1, 1);
-        model.position.set(0, 0, 0);
+        model.position.set(0, -0.1, 0);
         
         // Enable shadows for all meshes
         model.traverse((child) => {
@@ -101,8 +118,8 @@ const ThreeJSPhone: React.FC<ThreeJSPhoneProps> = ({ className = "" }) => {
         const maxDim = Math.max(size.x, size.y, size.z);
         const fov = camera.fov * (Math.PI / 180);
         let cameraZ = Math.abs(maxDim / 2 / Math.tan(fov / 2));
-        cameraZ *= 1.5; // Add some padding
-        camera.position.z = cameraZ;
+        cameraZ *= 1.4; // tight but comfortable frame
+        camera.position.set(0.2, 0.1, cameraZ);
         camera.updateProjectionMatrix();
       },
       (progress) => {
@@ -149,7 +166,6 @@ const ThreeJSPhone: React.FC<ThreeJSPhoneProps> = ({ className = "" }) => {
     <div 
       ref={mountRef} 
       className={`w-full h-full min-h-[400px] ${className}`}
-      style={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' }}
     />
   );
 };
