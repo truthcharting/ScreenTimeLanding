@@ -11,6 +11,7 @@ import sacredPause1 from "../images/IMG_9833.png";
 import sacredPause2 from "../images/IMG_9835.png";
 import sacredPause3 from "../images/IMG_9837.png";
 import sacredLogo from "./Sacred Logo.jpg";
+import hallowLogo from "./Hallow Logo White.png";
 
 export default function App() {
   const carouselItems = [
@@ -119,6 +120,37 @@ export default function App() {
             </div>
             
             <PhoneCarousel items={carouselItems} />
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Hallow Integration Section */}
+      <section className="py-32 px-6" style={{ backgroundColor: '#330066' }}>
+        <div className="max-w-6xl mx-auto text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="space-y-12"
+          >
+            <div className="space-y-8">
+              <div className="flex justify-center mb-8">
+                <img 
+                  src={hallowLogo} 
+                  alt="Hallow Logo" 
+                  className="h-16 opacity-90"
+                />
+              </div>
+              <h2 className="text-4xl lg:text-5xl font-light text-white font-serif">
+                This app is not a Catholic content app
+              </h2>
+              <p className="text-xl text-gray-200 leading-relaxed max-w-4xl mx-auto">
+                It exists to replace doomscrolling with prayer. For prayer content, the app aims to drive users to Hallow, 
+                decreasing the user's screentime on addictive apps like Instagram and Facebook, and increasing the amount of 
+                time spent in prayer, including suggested prayer sessions on the Hallow app.
+              </p>
+            </div>
           </motion.div>
         </div>
       </section>
