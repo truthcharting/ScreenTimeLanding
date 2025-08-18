@@ -1,6 +1,6 @@
 import { Button } from "./components/ui/button";
-import { PhoneMockup } from "./components/PhoneMockup";
 import { PhoneCarousel } from "./components/PhoneCarousel";
+import ThreeJSPhone from "./components/ThreeJSPhone";
 import { motion } from "framer-motion";
 import { ArrowRight, Download } from "lucide-react";
 // Real app screenshots from Figma
@@ -10,7 +10,6 @@ import profileScreenshot from "../images/IMG_9830.png";
 import sacredPause1 from "../images/IMG_9833.png";
 import sacredPause2 from "../images/IMG_9835.png";
 import sacredPause3 from "../images/IMG_9837.png";
-import instagramBlocked from "../images/IMG_9840.png";
 import sacredLogo from "./Sacred Logo.jpg";
 
 export default function App() {
@@ -84,20 +83,15 @@ export default function App() {
             </motion.div>
           </div>
 
-          {/* Main Phone Mockup - Instagram Blocked */}
+          {/* 3D iPhone Model */}
           <div className="flex justify-center mb-24">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
+              className="w-full max-w-2xl h-[600px]"
             >
-              <PhoneMockup>
-                <img 
-                  src={instagramBlocked} 
-                  alt="Instagram Blocked - Sacred Pause" 
-                  className="w-full h-full object-cover"
-                />
-              </PhoneMockup>
+              <ThreeJSPhone />
             </motion.div>
           </div>
 
