@@ -30,7 +30,12 @@ export default function App() {
         <div className="bg-black/80 backdrop-blur-md rounded-full px-6 py-3 border border-gray-700">
           <div className="flex items-center space-x-8">
             <div className="flex items-center space-x-3">
-              <span className="text-white font-semibold">Sacred</span>
+              <button 
+                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                className="text-white font-semibold hover:text-gray-300 transition-colors cursor-pointer"
+              >
+                Sacred
+              </button>
             </div>
             <div className="flex items-center space-x-6">
               <a 
@@ -110,10 +115,16 @@ export default function App() {
                     Download App
                     <ArrowRight className="w-5 h-5 ml-2" />
                   </a>
-                  <Button size="lg" variant="outline" className="rounded-full px-8 py-4 border-gray-600 text-gray-300 hover:bg-gray-800 text-base">
+                  <button 
+                    onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
+                    className="rounded-full px-8 py-4 border border-gray-600 text-gray-300 hover:bg-gray-800 text-base transition-colors"
+                  >
                     Learn More
-                  </Button>
+                  </button>
                 </div>
+                <p className="text-sm text-gray-500 pt-4">
+                  This proposal is specifically prepared for Hallow
+                </p>
               </motion.div>
             </div>
 
@@ -386,7 +397,7 @@ export default function App() {
               Ready to begin your journey?
             </h2>
             <p className="text-xl text-gray-400">
-              Join thousands discovering a more intentional spiritual life
+              Try our prototype app on Expo Go
             </p>
             
             <div className="flex flex-col sm:flex-row gap-6 justify-center pt-8">
