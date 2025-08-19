@@ -15,9 +15,15 @@ const ThreeJSPhone: React.FC<ThreeJSPhoneProps> = ({ className = "" }) => {
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
   const controlsRef = useRef<OrbitControls | null>(null);
   const modelRef = useRef<THREE.Group | null>(null);
+  const animationIdRef = useRef<number | null>(null);
 
   useEffect(() => {
     if (!mountRef.current) return;
+
+    // Clear any existing animation frame
+    if (animationIdRef.current) {
+      cancelAnimationFrame(animationIdRef.current);
+    }
 
     // Scene setup
     const scene = new THREE.Scene();
@@ -134,7 +140,7 @@ const ThreeJSPhone: React.FC<ThreeJSPhoneProps> = ({ className = "" }) => {
     const handleMouseMove = (event: MouseEvent) => {
       // Use window coordinates instead of component coordinates
       mouseX = (event.clientX / window.innerWidth) * 2 - 1;
-      mouseY = (event.clientY / window.innerHeight) * 2 - 1; // Fixed: removed negative sign
+      mouseY = (event.clientY / window.innerHeight) * 2 - 1;
     };
 
     window.addEventListener('mousemove', handleMouseMove);
@@ -150,7 +156,7 @@ const ThreeJSPhone: React.FC<ThreeJSPhoneProps> = ({ className = "" }) => {
 
     // Animation loop
     const animate = () => {
-      requestAnimationFrame(animate);
+      animationIdRef.current = requestAnimationFrame(animate);
       
       // Rotate iPhone to face mouse cursor and respond to scroll
       if (modelRef.current) {
@@ -158,12 +164,15 @@ const ThreeJSPhone: React.FC<ThreeJSPhoneProps> = ({ className = "" }) => {
         const targetRotationX = mouseY * 0.3; // Increased vertical rotation
         const scrollRotationY = scrollY * 1.2; // Increased scroll sensitivity
         
-        modelRef.current.rotation.y += (targetRotationY + scrollRotationY - modelRef.current.rotation.y) * 0.08; // Faster response
-        modelRef.current.rotation.x += (targetRotationX - modelRef.current.rotation.x) * 0.08; // Faster response
+        // Apply rotation with lerp for smooth movement
+        modelRef.current.rotation.y += (targetRotationY + scrollRotationY - modelRef.current.rotation.y) * 0.08;
+        modelRef.current.rotation.x += (targetRotationX - modelRef.current.rotation.x) * 0.08;
       }
       
-      controls.update();
-      renderer.render(scene, camera);
+      if (controls) controls.update();
+      if (renderer && scene && camera) {
+        renderer.render(scene, camera);
+      }
     };
     animate();
 
@@ -183,13 +192,30 @@ const ThreeJSPhone: React.FC<ThreeJSPhoneProps> = ({ className = "" }) => {
 
     // Cleanup
     return () => {
+      // Cancel animation frame
+      if (animationIdRef.current) {
+        cancelAnimationFrame(animationIdRef.current);
+        animationIdRef.current = null;
+      }
+      
+      // Remove event listeners
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('scroll', handleScroll);
-      if (mountRef.current && renderer.domElement) {
-        mountRef.current.removeChild(renderer.domElement);
+      
+      // Clean up Three.js resources
+      if (renderer) {
+        if (mountRef.current && renderer.domElement) {
+          mountRef.current.removeChild(renderer.domElement);
+        }
+        renderer.dispose();
       }
-      renderer.dispose();
+      
+      // Clear refs
+      sceneRef.current = null;
+      rendererRef.current = null;
+      controlsRef.current = null;
+      modelRef.current = null;
     };
   }, []);
 
@@ -197,6 +223,7 @@ const ThreeJSPhone: React.FC<ThreeJSPhoneProps> = ({ className = "" }) => {
     <div 
       ref={mountRef} 
       className={`w-full h-full min-h-[400px] ${className}`}
+      style={{ zIndex: 50, position: 'relative' }}
     />
   );
 };

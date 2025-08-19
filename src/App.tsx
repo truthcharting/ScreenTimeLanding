@@ -2,26 +2,25 @@ import { Button } from "./components/ui/button";
 import { PhoneCarousel } from "./components/PhoneCarousel";
 import ThreeJSPhone from "./components/ThreeJSPhone";
 import { SacredLogo } from "./components/SacredLogo";
+import { VideoMockup } from "./components/VideoMockup";
 import { motion } from "framer-motion";
 import { ArrowRight, Download } from "lucide-react";
 // Real app screenshots from Figma
 import mapScreenshot from "../images/IMG_9828.png";
 import journalScreenshot from "../images/IMG_9829.png";
 import profileScreenshot from "../images/IMG_9830.png";
-import sacredPause1 from "../images/IMG_9833.png";
-import sacredPause2 from "../images/IMG_9835.png";
-import sacredPause3 from "../images/IMG_9837.png";
+import additionalScreenshot from "../images/IMG_9840.png";
+import newScreenshot from "../images/IMG_9881.png";
 import sacredLogo from "./Sacred Logo.jpg";
 import hallowLogo from "./hallow-logo.svg";
 
 export default function App() {
   const carouselItems = [
     { src: mapScreenshot, alt: "Pilgrim Path Map" },
-    { src: sacredPause1, alt: "Sacred Pause - Prayer Prompt" },
-    { src: sacredPause2, alt: "Sacred Pause - Time Check" },
-    { src: sacredPause3, alt: "Sacred Pause - Time Limit" },
     { src: journalScreenshot, alt: "Daily Journal" },
     { src: profileScreenshot, alt: "Profile & Progress" },
+    { src: additionalScreenshot, alt: "Additional Feature" },
+    { src: newScreenshot, alt: "New Feature" },
   ];
 
   return (
@@ -31,11 +30,11 @@ export default function App() {
         <div className="bg-black/80 backdrop-blur-md rounded-full px-6 py-3 border border-gray-700">
           <div className="flex items-center space-x-8">
             <div className="flex items-center space-x-3">
-              <div className="w-6 h-6 bg-white rounded-md flex items-center justify-center overflow-hidden">
+              <div className="w-6 h-6 flex items-center justify-center overflow-hidden rounded-md">
                 <img 
-                  src={sacredLogo} 
+                  src="/images/Sacred Logo Icon.png" 
                   alt="Sacred Logo" 
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-contain"
                 />
               </div>
               <span className="text-white font-semibold">Sacred</span>
@@ -102,6 +101,29 @@ export default function App() {
               </motion.div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Video Mockup Section */}
+      <section className="py-32 px-6">
+        <div className="max-w-6xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+            className="text-center space-y-12"
+          >
+            <div className="space-y-6">
+              <h2 className="text-4xl font-light text-white font-serif">
+                See Sacred in action
+              </h2>
+              <p className="text-gray-400 max-w-3xl mx-auto text-lg">
+                Watch how Sacred transforms your daily screen time into meaningful prayer moments
+              </p>
+            </div>
+            
+            <VideoMockup />
+          </motion.div>
         </div>
       </section>
 
@@ -361,11 +383,11 @@ export default function App() {
       <footer className="py-16 px-6 border-t border-gray-800 bg-black">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center overflow-hidden">
+            <div className="w-8 h-8 flex items-center justify-center overflow-hidden rounded-lg">
               <img 
-                src={sacredLogo} 
+                src="/images/Sacred Logo Icon.png" 
                 alt="Sacred Logo" 
-                className="w-full h-full object-cover"
+                className="w-full h-full object-contain"
               />
             </div>
             <span className="text-2xl font-medium text-white">Sacred</span>

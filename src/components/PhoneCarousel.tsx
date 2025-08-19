@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { PhoneMockup } from "./PhoneMockup";
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
 
 interface CarouselItem {
   src: string;
@@ -12,86 +12,71 @@ interface PhoneCarouselProps {
 }
 
 export function PhoneCarousel({ items }: PhoneCarouselProps) {
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const animationRef = useRef<number>();
+  
+  // Create a much longer array that repeats the items many times for seamless looping
+  const extendedItems = [...items, ...items, ...items, ...items, ...items, ...items]; // 6x the original items
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % items.length);
-    }, 3000);
-
-    return () => clearInterval(timer);
-  }, [items.length]);
-
-  // Calculate the offset to center the current item
-  // Each item is 280px wide, and we want the current item to be centered
-  const itemWidth = 280;
-  const centerOffset = (window.innerWidth - itemWidth) / 2;
-  const translateX = centerOffset - (currentIndex * itemWidth);
+    // Start the animation
+    const startTime = Date.now();
+    const itemWidth = 320; // Width of each item including margin
+    const totalWidth = extendedItems.length * itemWidth;
+    const duration = 120000; // 120 seconds for full cycle (slower)
+    
+    const animate = () => {
+      const elapsed = Date.now() - startTime;
+      const progress = (elapsed % duration) / duration;
+      const translateX = -(progress * totalWidth);
+      
+      const carousel = document.getElementById('carousel-container');
+      if (carousel) {
+        carousel.style.transform = `translateX(${translateX}px)`;
+      }
+      
+      animationRef.current = requestAnimationFrame(animate);
+    };
+    
+    animationRef.current = requestAnimationFrame(animate);
+    
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+    };
+  }, [extendedItems.length]);
 
   return (
-    <div className="relative w-full h-[600px] flex items-center justify-center overflow-hidden">
-      <motion.div 
-        className="flex items-center justify-center"
-        animate={{ 
-          x: translateX
-        }}
-        transition={{
-          type: "tween",
-          ease: "easeInOut",
-          duration: 1.2
+    <div className="relative w-screen h-[600px] flex items-center overflow-hidden" style={{ marginLeft: '-50vw', marginRight: '-50vw', left: '50%', right: '50%', position: 'relative', zIndex: 1 }}>
+      <div 
+        id="carousel-container"
+        className="flex items-center absolute left-0"
+        style={{ 
+          width: `${extendedItems.length * 320}px`,
         }}
       >
         {/* Render all items in a horizontal line */}
-        {items.map((item, index) => {
-          const isCenter = index === currentIndex;
-          const scale = isCenter ? 1 : 0.7;
-          const opacity = isCenter ? 1 : 0.4;
-          const zIndex = isCenter ? 10 : 5;
-
-          return (
-            <div
-              key={index}
-              className="mx-4 flex-shrink-0"
-              style={{ width: '280px' }}
-            >
-              <motion.div
-                animate={{ 
-                  scale: scale,
-                  opacity: opacity,
-                  zIndex: zIndex
-                }}
-                transition={{
-                  type: "tween",
-                  ease: "easeInOut",
-                  duration: 0.8
-                }}
-                style={{
-                  pointerEvents: isCenter ? 'auto' : 'none'
-                }}
-              >
-                <PhoneMockup>
-                  <img
-                    src={item.src}
-                    alt={item.alt}
-                    className="w-full h-full object-cover"
-                  />
-                </PhoneMockup>
-              </motion.div>
-            </div>
-          );
-        })}
-      </motion.div>
-
-      {/* Dots indicator */}
-      <div className="absolute bottom-0 flex justify-center gap-2">
-        {items.map((_, index) => (
-          <button
+        {extendedItems.map((item, index) => (
+          <div
             key={index}
-            onClick={() => setCurrentIndex(index)}
-            className={`w-2 h-2 rounded-full transition-all duration-300 ${
-              index === currentIndex ? "bg-white" : "bg-white/30"
-            }`}
-          />
+            className="mx-4 flex-shrink-0"
+            style={{ width: '280px' }}
+          >
+            <div
+              style={{
+                opacity: 1,
+                transform: 'scale(0.8)'
+              }}
+            >
+              <PhoneMockup>
+                <img
+                  src={item.src}
+                  alt={item.alt}
+                  className="w-full h-full object-cover"
+                />
+              </PhoneMockup>
+            </div>
+          </div>
         ))}
       </div>
     </div>
