@@ -1,4 +1,3 @@
-import { Button } from "./components/ui/button";
 import { PhoneCarousel } from "./components/PhoneCarousel";
 import ThreeJSPhone from "./components/ThreeJSPhone";
 import { SacredLogo } from "./components/SacredLogo";
