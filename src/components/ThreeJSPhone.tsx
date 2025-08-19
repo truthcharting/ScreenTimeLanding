@@ -1,9 +1,9 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
-import iphoneModel from '../iphone_16_With_Screen_3.glb';
+import iphoneModel from '../lowpoly-iphone.glb';
 
 interface ThreeJSPhoneProps {
   className?: string;
@@ -16,207 +16,228 @@ const ThreeJSPhone: React.FC<ThreeJSPhoneProps> = ({ className = "" }) => {
   const controlsRef = useRef<OrbitControls | null>(null);
   const modelRef = useRef<THREE.Group | null>(null);
   const animationIdRef = useRef<number | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!mountRef.current) return;
+
+    console.log('ThreeJSPhone: Initializing...');
 
     // Clear any existing animation frame
     if (animationIdRef.current) {
       cancelAnimationFrame(animationIdRef.current);
     }
 
-    // Scene setup
-    const scene = new THREE.Scene();
-    // Transparent canvas; let the page background show through
-    scene.background = null;
-    sceneRef.current = scene;
+    try {
+      // Scene setup
+      const scene = new THREE.Scene();
+      // Transparent canvas; let the page background show through
+      scene.background = null;
+      sceneRef.current = scene;
 
-    // Camera setup
-    const camera = new THREE.PerspectiveCamera(
-      75,
-      mountRef.current.clientWidth / mountRef.current.clientHeight,
-      0.1,
-      1000
-    );
-    camera.position.set(0, 0, 5);
+      // Camera setup
+      const camera = new THREE.PerspectiveCamera(
+        75,
+        mountRef.current.clientWidth / mountRef.current.clientHeight,
+        0.1,
+        1000
+      );
+      camera.position.set(0, 0, 5);
 
-    // Renderer setup
-    const renderer = new THREE.WebGLRenderer({ 
-      antialias: true,
-      alpha: true 
-    });
-    renderer.setSize(mountRef.current.clientWidth, mountRef.current.clientHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-    renderer.outputColorSpace = THREE.SRGBColorSpace;
-    renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.2;
-    renderer.setClearColor(0x000000, 0);
-    rendererRef.current = renderer;
+      // Renderer setup
+      const renderer = new THREE.WebGLRenderer({ 
+        antialias: true,
+        alpha: true 
+      });
+      renderer.setSize(mountRef.current.clientWidth, mountRef.current.clientHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.shadowMap.enabled = true;
+      renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+      renderer.outputColorSpace = THREE.SRGBColorSpace;
+      renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      renderer.toneMappingExposure = 1.2;
+      renderer.setClearColor(0x000000, 0);
+      rendererRef.current = renderer;
 
-    mountRef.current.appendChild(renderer.domElement);
+      mountRef.current.appendChild(renderer.domElement);
 
-    // Lighting setup – balanced key/fill/rim plus subtle environment
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.25);
-    scene.add(ambientLight);
+      // Lighting setup – balanced key/fill/rim plus subtle environment
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.25);
+      scene.add(ambientLight);
 
-    const keyLight = new THREE.DirectionalLight(0xffffff, 1.15);
-    keyLight.position.set(4, 6, 8);
-    keyLight.castShadow = true;
-    keyLight.shadow.mapSize.width = 2048;
-    keyLight.shadow.mapSize.height = 2048;
-    scene.add(keyLight);
+      const keyLight = new THREE.DirectionalLight(0xffffff, 1.15);
+      keyLight.position.set(4, 6, 8);
+      keyLight.castShadow = true;
+      keyLight.shadow.mapSize.width = 2048;
+      keyLight.shadow.mapSize.height = 2048;
+      scene.add(keyLight);
 
-    const fillLight = new THREE.DirectionalLight(0xffffff, 0.6);
-    fillLight.position.set(-6, 2, 4);
-    scene.add(fillLight);
+      const fillLight = new THREE.DirectionalLight(0xffffff, 0.6);
+      fillLight.position.set(-6, 2, 4);
+      scene.add(fillLight);
 
-    const rimLight = new THREE.DirectionalLight(0xffffff, 0.8);
-    rimLight.position.set(0, 5, -6);
-    scene.add(rimLight);
+      const rimLight = new THREE.DirectionalLight(0xffffff, 0.8);
+      rimLight.position.set(0, 5, -6);
+      scene.add(rimLight);
 
-    const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444, 0.35);
-    hemiLight.position.set(0, 6, 0);
-    scene.add(hemiLight);
+      const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444, 0.35);
+      hemiLight.position.set(0, 6, 0);
+      scene.add(hemiLight);
 
-    // Image-based lighting for PBR materials
-    const pmrem = new THREE.PMREMGenerator(renderer);
-    pmrem.compileEquirectangularShader();
-    const env = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
-    scene.environment = env;
+      // Image-based lighting for PBR materials
+      const pmrem = new THREE.PMREMGenerator(renderer);
+      pmrem.compileEquirectangularShader();
+      const env = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+      scene.environment = env;
 
-    // Disable controls - we'll handle rotation manually
-    const controls = new OrbitControls(camera, renderer.domElement);
-    controls.enableDamping = false;
-    controls.enableZoom = false;
-    controls.enablePan = false;
-    controls.enableRotate = false;
-    controls.autoRotate = false;
-    controlsRef.current = controls;
+      // Disable controls - we'll handle rotation manually
+      const controls = new OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = false;
+      controls.enableZoom = false;
+      controls.enablePan = false;
+      controls.enableRotate = false;
+      controls.autoRotate = false;
+      controlsRef.current = controls;
 
-    // Load 3D model
-    const loader = new GLTFLoader();
-    loader.load(
-      iphoneModel,
-      (gltf) => {
-        const model = gltf.scene;
-        model.scale.set(1, 1, 1);
-        model.position.set(0, 0, 0);
-        
-        // Enable shadows for all meshes
-        model.traverse((child) => {
-          if (child instanceof THREE.Mesh) {
-            child.castShadow = true;
-            child.receiveShadow = true;
-          }
-        });
+      console.log('ThreeJSPhone: Loading 3D model...');
 
-        scene.add(model);
-        modelRef.current = model;
+      // Load 3D model
+      const loader = new GLTFLoader();
+      loader.load(
+        iphoneModel,
+        (gltf) => {
+          console.log('ThreeJSPhone: Model loaded successfully');
+          const model = gltf.scene;
+          model.scale.set(1, 1, 1);
+          model.position.set(0, 0, 0);
+          model.rotation.y = Math.PI; // Rotate 180 degrees to show the screen side
+          
+          // Enable shadows for all meshes
+          model.traverse((child) => {
+            if (child instanceof THREE.Mesh) {
+              child.castShadow = true;
+              child.receiveShadow = true;
+            }
+          });
 
-        // Center camera on model
-        const box = new THREE.Box3().setFromObject(model);
-        const size = box.getSize(new THREE.Vector3());
-        const maxDim = Math.max(size.x, size.y, size.z);
-        const fov = camera.fov * (Math.PI / 180);
-        let cameraZ = Math.abs(maxDim / 2 / Math.tan(fov / 2));
-        cameraZ *= 1.2; // slightly further to ensure full visibility
-        camera.position.set(0, -0.2, cameraZ); // move camera down slightly
-        camera.updateProjectionMatrix();
-      },
-      (progress) => {
-        console.log('Loading progress:', (progress.loaded / progress.total * 100) + '%');
-      },
-      (error) => {
-        console.error('Error loading model:', error);
-      }
-    );
+          scene.add(model);
+          modelRef.current = model;
+          setIsLoading(false);
 
-    // Mouse tracking for iPhone rotation - track across entire window
-    let mouseX = 0;
-    let mouseY = 0;
-    
-    const handleMouseMove = (event: MouseEvent) => {
-      // Use window coordinates instead of component coordinates
-      mouseX = (event.clientX / window.innerWidth) * 2 - 1;
-      mouseY = (event.clientY / window.innerHeight) * 2 - 1;
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-
-    // Scroll tracking for iPhone rotation
-    let scrollY = 0;
-    
-    const handleScroll = () => {
-      scrollY = window.scrollY / (document.body.scrollHeight - window.innerHeight);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-
-    // Animation loop
-    const animate = () => {
-      animationIdRef.current = requestAnimationFrame(animate);
-      
-      // Rotate iPhone to face mouse cursor and respond to scroll
-      if (modelRef.current) {
-        const targetRotationY = mouseX * 0.8; // Increased rotation range for more substantial movement
-        const targetRotationX = mouseY * 0.3; // Increased vertical rotation
-        const scrollRotationY = scrollY * 1.2; // Increased scroll sensitivity
-        
-        // Apply rotation with lerp for smooth movement
-        modelRef.current.rotation.y += (targetRotationY + scrollRotationY - modelRef.current.rotation.y) * 0.08;
-        modelRef.current.rotation.x += (targetRotationX - modelRef.current.rotation.x) * 0.08;
-      }
-      
-      if (controls) controls.update();
-      if (renderer && scene && camera) {
-        renderer.render(scene, camera);
-      }
-    };
-    animate();
-
-    // Handle resize
-    const handleResize = () => {
-      if (!mountRef.current || !camera || !renderer) return;
-      
-      const width = mountRef.current.clientWidth;
-      const height = mountRef.current.clientHeight;
-      
-      camera.aspect = width / height;
-      camera.updateProjectionMatrix();
-      renderer.setSize(width, height);
-    };
-
-    window.addEventListener('resize', handleResize);
-
-    // Cleanup
-    return () => {
-      // Cancel animation frame
-      if (animationIdRef.current) {
-        cancelAnimationFrame(animationIdRef.current);
-        animationIdRef.current = null;
-      }
-      
-      // Remove event listeners
-      window.removeEventListener('resize', handleResize);
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('scroll', handleScroll);
-      
-      // Clean up Three.js resources
-      if (renderer) {
-        if (mountRef.current && renderer.domElement) {
-          mountRef.current.removeChild(renderer.domElement);
+          // Center camera on model
+          const box = new THREE.Box3().setFromObject(model);
+          const size = box.getSize(new THREE.Vector3());
+          const maxDim = Math.max(size.x, size.y, size.z);
+          const fov = camera.fov * (Math.PI / 180);
+          let cameraZ = Math.abs(maxDim / 2 / Math.tan(fov / 2));
+          cameraZ *= 1.2; // slightly further to ensure full visibility
+          camera.position.set(0, -0.2, cameraZ); // move camera down slightly
+          camera.updateProjectionMatrix();
+        },
+        (progress) => {
+          console.log('ThreeJSPhone: Loading progress:', (progress.loaded / progress.total * 100) + '%');
+        },
+        (error) => {
+          console.error('ThreeJSPhone: Error loading model:', error);
+          setError('Failed to load 3D model');
+          setIsLoading(false);
         }
-        renderer.dispose();
-      }
+      );
+
+      // Mouse tracking for iPhone rotation - track across entire window
+      let mouseX = 0;
+      let mouseY = 0;
       
-      // Clear refs
-      sceneRef.current = null;
-      rendererRef.current = null;
-      controlsRef.current = null;
-      modelRef.current = null;
-    };
+      const handleMouseMove = (event: MouseEvent) => {
+        // Use window coordinates instead of component coordinates
+        mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+        mouseY = (event.clientY / window.innerHeight) * 2 - 1;
+      };
+
+      window.addEventListener('mousemove', handleMouseMove);
+
+      // Scroll tracking for iPhone rotation
+      let scrollY = 0;
+      
+      const handleScroll = () => {
+        scrollY = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+      };
+
+      window.addEventListener('scroll', handleScroll);
+
+      // Animation loop
+      const animate = () => {
+        animationIdRef.current = requestAnimationFrame(animate);
+        
+        // Rotate iPhone to face mouse cursor and respond to scroll
+        if (modelRef.current) {
+          const targetRotationY = mouseX * 0.8; // Increased rotation range for more substantial movement
+          const targetRotationX = mouseY * 0.3; // Increased vertical rotation
+          const scrollRotationY = scrollY * 1.2; // Increased scroll sensitivity
+          
+          // Apply rotation with lerp for smooth movement, accounting for the 180-degree offset
+          const baseRotationY = Math.PI; // 180 degrees (the initial rotation to show screen)
+          const finalTargetRotationY = baseRotationY + targetRotationY + scrollRotationY;
+          
+          modelRef.current.rotation.y += (finalTargetRotationY - modelRef.current.rotation.y) * 0.08;
+          modelRef.current.rotation.x += (targetRotationX - modelRef.current.rotation.x) * 0.08;
+        }
+        
+        if (controls) controls.update();
+        if (renderer && scene && camera) {
+          renderer.render(scene, camera);
+        }
+      };
+      animate();
+
+      // Handle resize
+      const handleResize = () => {
+        if (!mountRef.current || !camera || !renderer) return;
+        
+        const width = mountRef.current.clientWidth;
+        const height = mountRef.current.clientHeight;
+        
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+        renderer.setSize(width, height);
+      };
+
+      window.addEventListener('resize', handleResize);
+
+      // Cleanup
+      return () => {
+        console.log('ThreeJSPhone: Cleaning up...');
+        // Cancel animation frame
+        if (animationIdRef.current) {
+          cancelAnimationFrame(animationIdRef.current);
+          animationIdRef.current = null;
+        }
+        
+        // Remove event listeners
+        window.removeEventListener('resize', handleResize);
+        window.removeEventListener('mousemove', handleMouseMove);
+        window.removeEventListener('scroll', handleScroll);
+        
+        // Clean up Three.js resources
+        if (renderer) {
+          if (mountRef.current && renderer.domElement) {
+            mountRef.current.removeChild(renderer.domElement);
+          }
+          renderer.dispose();
+        }
+        
+        // Clear refs
+        sceneRef.current = null;
+        rendererRef.current = null;
+        controlsRef.current = null;
+        modelRef.current = null;
+      };
+    } catch (err) {
+      console.error('ThreeJSPhone: Initialization error:', err);
+      setError('Failed to initialize 3D scene');
+      setIsLoading(false);
+    }
   }, []);
 
   return (

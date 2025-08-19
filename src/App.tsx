@@ -26,17 +26,10 @@ export default function App() {
   return (
     <div className="min-h-screen bg-gray-900 text-white">
       {/* Navigation */}
-      <nav className="fixed top-6 left-1/2 transform -translate-x-1/2 z-50">
+      <nav className="fixed top-6 left-1/2 transform -translate-x-1/2 z-[9999]">
         <div className="bg-black/80 backdrop-blur-md rounded-full px-6 py-3 border border-gray-700">
           <div className="flex items-center space-x-8">
             <div className="flex items-center space-x-3">
-              <div className="w-6 h-6 flex items-center justify-center overflow-hidden rounded-md">
-                <img 
-                  src="/images/Sacred Logo Icon.png" 
-                  alt="Sacred Logo" 
-                  className="w-full h-full object-contain"
-                />
-              </div>
               <span className="text-white font-semibold">Sacred</span>
             </div>
             <div className="flex items-center space-x-6">
@@ -429,13 +422,6 @@ export default function App() {
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-start gap-8">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 flex items-center justify-center overflow-hidden rounded-lg">
-                <img 
-                  src="/images/Sacred Logo Icon.png" 
-                  alt="Sacred Logo" 
-                  className="w-full h-full object-contain"
-                />
-              </div>
               <span className="text-2xl font-medium text-white">Sacred</span>
             </div>
             

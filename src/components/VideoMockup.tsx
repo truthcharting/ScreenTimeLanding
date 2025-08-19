@@ -4,12 +4,31 @@ import { useRef, useEffect, useState } from "react";
 export const VideoMockup = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
+  const [videoError, setVideoError] = useState<string | null>(null);
+  const [showFallback, setShowFallback] = useState(false);
 
   useEffect(() => {
     const video = videoRef.current;
     if (video) {
-      video.addEventListener('loadeddata', () => setIsVideoLoaded(true));
-      video.addEventListener('error', () => console.error('Video failed to load'));
+      const handleLoadedData = () => {
+        setIsVideoLoaded(true);
+        setVideoError(null);
+        setShowFallback(false);
+      };
+      
+      const handleError = (e: Event) => {
+        setVideoError('Video failed to load');
+        setIsVideoLoaded(false);
+        setShowFallback(true);
+      };
+      
+      video.addEventListener('loadeddata', handleLoadedData);
+      video.addEventListener('error', handleError);
+      
+      return () => {
+        video.removeEventListener('loadeddata', handleLoadedData);
+        video.removeEventListener('error', handleError);
+      };
     }
   }, []);
 
@@ -23,7 +42,7 @@ export const VideoMockup = () => {
       <div className="relative w-[300px] h-[600px]">
         {/* iPhone SVG Overlay */}
         <img
-          src="/images/iPhone SVG.svg"
+          src="/ScreenTimeLanding/images/iPhone SVG.svg"
           alt="iPhone Mockup"
           className="absolute inset-0 w-full h-full object-contain z-10 pointer-events-none"
         />
@@ -31,24 +50,33 @@ export const VideoMockup = () => {
         {/* Video Container - positioned to fit within the iPhone screen */}
         <div className="absolute inset-0 flex items-center justify-center z-0">
           <div className="w-[273px] h-[503px] rounded-[35px] overflow-hidden bg-black">
-            <video
-              ref={videoRef}
-              className="w-full h-full object-contain"
-              autoPlay
-              loop
-              muted
-              playsInline
-              poster="/images/IMG_9828.png"
-            >
-              <source src="/videos/sacred_example_vid1.MOV" type="video/quicktime" />
-              <source src="/videos/sacred_example_vid1.MOV" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
+            {!showFallback ? (
+              <video
+                ref={videoRef}
+                className="w-full h-full object-contain"
+                autoPlay
+                loop
+                muted
+                playsInline
+                poster="/ScreenTimeLanding/images/IMG_9828.png"
+              >
+                <source src="/ScreenTimeLanding/videos/sacred_example_vid1.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            ) : (
+              <img
+                src="/ScreenTimeLanding/images/IMG_9828.png"
+                alt="Sacred App Screenshot"
+                className="w-full h-full object-contain"
+              />
+            )}
             
             {/* Loading overlay */}
-            {!isVideoLoaded && (
+            {!isVideoLoaded && !showFallback && (
               <div className="absolute inset-0 bg-gray-900 flex items-center justify-center">
-                <div className="text-white text-sm">Loading video...</div>
+                <div className="text-white text-sm">
+                  {videoError ? `Error: ${videoError}` : 'Loading video...'}
+                </div>
               </div>
             )}
           </div>
