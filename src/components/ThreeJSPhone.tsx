@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect } from 'react';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
@@ -16,8 +16,6 @@ const ThreeJSPhone: React.FC<ThreeJSPhoneProps> = ({ className = "" }) => {
   const controlsRef = useRef<OrbitControls | null>(null);
   const modelRef = useRef<THREE.Group | null>(null);
   const animationIdRef = useRef<number | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!mountRef.current) return;
@@ -123,7 +121,6 @@ const ThreeJSPhone: React.FC<ThreeJSPhoneProps> = ({ className = "" }) => {
 
           scene.add(model);
           modelRef.current = model;
-          setIsLoading(false);
 
           // Center camera on model
           const box = new THREE.Box3().setFromObject(model);
@@ -140,8 +137,6 @@ const ThreeJSPhone: React.FC<ThreeJSPhoneProps> = ({ className = "" }) => {
         },
         (error) => {
           console.error('ThreeJSPhone: Error loading model:', error);
-          setError('Failed to load 3D model');
-          setIsLoading(false);
         }
       );
 
@@ -235,8 +230,6 @@ const ThreeJSPhone: React.FC<ThreeJSPhoneProps> = ({ className = "" }) => {
       };
     } catch (err) {
       console.error('ThreeJSPhone: Initialization error:', err);
-      setError('Failed to initialize 3D scene');
-      setIsLoading(false);
     }
   }, []);
 

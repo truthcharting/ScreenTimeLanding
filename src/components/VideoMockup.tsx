@@ -16,7 +16,7 @@ export const VideoMockup = () => {
         setShowFallback(false);
       };
       
-      const handleError = (e: Event) => {
+      const handleError = () => {
         setVideoError('Video failed to load');
         setIsVideoLoaded(false);
         setShowFallback(true);
