@@ -40,15 +40,45 @@ export default function App() {
               <span className="text-white font-semibold">Sacred</span>
             </div>
             <div className="flex items-center space-x-6">
-              <a href="#" className="text-gray-300 hover:text-white transition-colors">Features</a>
-              <a href="#" className="text-gray-300 hover:text-white transition-colors">About</a>
-              <a href="#" className="text-gray-300 hover:text-white transition-colors">Pricing</a>
-              <a href="#" className="text-gray-300 hover:text-white transition-colors">Store</a>
-              <a href="#" className="text-gray-300 hover:text-white transition-colors">Contact</a>
+              <a 
+                href="#features" 
+                className="text-gray-300 hover:text-white transition-colors cursor-pointer"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+              >
+                Features
+              </a>
+              <a 
+                href="#partner" 
+                className="text-gray-300 hover:text-white transition-colors cursor-pointer"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById('partner')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+              >
+                Partner
+              </a>
+              <a 
+                href="#contact" 
+                className="text-gray-300 hover:text-white transition-colors cursor-pointer"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+              >
+                Contact
+              </a>
             </div>
-            <Button className="bg-white text-black hover:bg-gray-200 rounded-full px-4 py-2">
+            <a 
+              href="https://expo.dev/accounts/johndonahue/projects/ScreenTimeAppV2/updates/2fc646f8-6d1a-4772-b71b-50cf60981ff9"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-white text-black hover:bg-gray-200 rounded-full px-4 py-2 font-medium transition-colors"
+            >
               Download
-            </Button>
+            </a>
           </div>
         </div>
       </nav>
@@ -78,10 +108,15 @@ export default function App() {
                 </div>
                 
                 <div className="flex gap-4 pt-8">
-                  <Button size="lg" className="bg-white text-black hover:bg-gray-200 rounded-full px-8 py-4 text-base">
+                  <a 
+                    href="https://expo.dev/accounts/johndonahue/projects/ScreenTimeAppV2/updates/2fc646f8-6d1a-4772-b71b-50cf60981ff9"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-white text-black hover:bg-gray-200 rounded-full px-8 py-4 text-base font-medium transition-colors flex items-center"
+                  >
                     Download App
                     <ArrowRight className="w-5 h-5 ml-2" />
-                  </Button>
+                  </a>
                   <Button size="lg" variant="outline" className="rounded-full px-8 py-4 border-gray-600 text-gray-300 hover:bg-gray-800 text-base">
                     Learn More
                   </Button>
@@ -151,7 +186,7 @@ export default function App() {
       </section>
 
       {/* Hallow Integration Section */}
-      <section className="py-32 px-6" style={{ backgroundColor: '#330066' }}>
+      <section id="partner" className="py-32 px-6" style={{ backgroundColor: '#330066' }}>
         <div className="max-w-6xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -291,7 +326,7 @@ export default function App() {
       </section>
 
       {/* Features Section */}
-      <section className="py-32 px-6 bg-black">
+      <section id="features" className="py-32 px-6 bg-black">
         <div className="max-w-6xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -362,14 +397,24 @@ export default function App() {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-6 justify-center pt-8">
-              <Button size="lg" className="bg-white text-black hover:bg-gray-200 rounded-full px-12 py-4 text-base">
+              <a 
+                href="https://expo.dev/accounts/johndonahue/projects/ScreenTimeAppV2/updates/2fc646f8-6d1a-4772-b71b-50cf60981ff9"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white text-black hover:bg-gray-200 rounded-full px-12 py-4 text-base font-medium transition-colors flex items-center justify-center"
+              >
                 <Download className="w-5 h-5 mr-2" />
                 Download for iOS
-              </Button>
-              <Button size="lg" className="bg-white text-black hover:bg-gray-200 rounded-full px-12 py-4 text-base">
+              </a>
+              <a 
+                href="https://expo.dev/accounts/johndonahue/projects/ScreenTimeAppV2/updates/2fc646f8-6d1a-4772-b71b-50cf60981ff9"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white text-black hover:bg-gray-200 rounded-full px-12 py-4 text-base font-medium transition-colors flex items-center justify-center"
+              >
                 <Download className="w-5 h-5 mr-2" />
                 Download for Android
-              </Button>
+              </a>
             </div>
 
             <p className="text-sm text-gray-500 mt-12">
@@ -380,23 +425,34 @@ export default function App() {
       </section>
 
       {/* Footer */}
-      <footer className="py-16 px-6 border-t border-gray-800 bg-black">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 flex items-center justify-center overflow-hidden rounded-lg">
-              <img 
-                src="/images/Sacred Logo Icon.png" 
-                alt="Sacred Logo" 
-                className="w-full h-full object-contain"
-              />
+      <footer id="contact" className="py-16 px-6 border-t border-gray-800 bg-black">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-col md:flex-row justify-between items-start gap-8">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 flex items-center justify-center overflow-hidden rounded-lg">
+                <img 
+                  src="/images/Sacred Logo Icon.png" 
+                  alt="Sacred Logo" 
+                  className="w-full h-full object-contain"
+                />
+              </div>
+              <span className="text-2xl font-medium text-white">Sacred</span>
             </div>
-            <span className="text-2xl font-medium text-white">Sacred</span>
-          </div>
-          
-          <div className="flex items-center gap-12 text-sm text-gray-400">
-            <a href="#" className="hover:text-white transition-colors">Privacy</a>
-            <a href="#" className="hover:text-white transition-colors">Terms</a>
-            <a href="#" className="hover:text-white transition-colors">Support</a>
+            
+            <div className="flex flex-col items-start space-y-4">
+              <h3 className="text-lg font-semibold text-white">Contact</h3>
+              <div className="text-gray-400 space-y-2">
+                <p className="font-medium text-white">John Donahue</p>
+                <p>Cell: <a href="tel:352-223-2895" className="hover:text-white transition-colors">352-223-2895</a></p>
+                <p>Email: <a href="mailto:john@truthcharting.com" className="hover:text-white transition-colors">john@truthcharting.com</a></p>
+              </div>
+            </div>
+            
+            <div className="flex items-center gap-12 text-sm text-gray-400">
+              <a href="#" className="hover:text-white transition-colors">Privacy</a>
+              <a href="#" className="hover:text-white transition-colors">Terms</a>
+              <a href="#" className="hover:text-white transition-colors">Support</a>
+            </div>
           </div>
         </div>
       </footer>
