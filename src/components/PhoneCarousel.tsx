@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+
 import { PhoneMockup } from "./PhoneMockup";
 import { useEffect, useRef } from "react";
 

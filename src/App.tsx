@@ -11,7 +11,7 @@ import journalScreenshot from "../images/IMG_9829.png";
 import profileScreenshot from "../images/IMG_9830.png";
 import additionalScreenshot from "../images/IMG_9840.png";
 import newScreenshot from "../images/IMG_9881.png";
-import sacredLogo from "./Sacred Logo.jpg";
+
 import hallowLogo from "./hallow-logo.svg";
 
 export default function App() {
